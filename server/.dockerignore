@@ -1,0 +1,4 @@
+data
+*.xlsx
+Pipfile
+PipFile.lock

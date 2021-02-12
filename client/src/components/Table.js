@@ -60,7 +60,7 @@ const TableView = ({trades, setTrades, setUser}) => {
   var rowsView = sortedRows.map((row, i) => {
     var stdError =
       (prices?.[row.yStock] - row.slope * prices?.[row.xStock] - row.intercept) /
-      row.stdErrResid;
+      row.stdErrorResid;
     // var stdErrorRolling = (
     //   (prices?.[row.yStock] - row.slope * prices?.[row.xStock] - row.intercept) /
     //   row.rollStdErrResid
@@ -69,9 +69,10 @@ const TableView = ({trades, setTrades, setUser}) => {
     if (isNaN(stdError)) stdError = row.stdError;
     if (stdError < -2.4) highlight = 'table-success';
     if (stdError > 2.4) highlight = 'table-danger';
-    var xLtp = prices?.[row.xStock] || row.xLtp;
-    var yLtp = prices?.[row.yStock] || row.yLtp;
-
+    var xLtp = +(prices?.[row.xStock] || row.xLtp);
+    var yLtp = +(prices?.[row.yStock] || row.yLtp);
+    console.log('the ltp is ', xLtp);
+    console.log('the ltp is ', yLtp);
     return (
       <tr
         className={highlight}
@@ -100,8 +101,8 @@ const TableView = ({trades, setTrades, setUser}) => {
         <td>{row.intercept.toFixed(4)}</td>
         <td>{row.stdErrorResid.toFixed(4)}</td>
         {/* <td>{row.diff}</td> */}
-        <td>{yLtp.toFixed(3)}</td>
-        <td>{xLtp.toFixed(3)}</td>
+        <td>{yLtp}</td>
+        <td>{xLtp}</td>
         <td>
           <button
             onClick={() => history.push(`/pairdetails/${row.yStock}/${row.xStock}`)}
